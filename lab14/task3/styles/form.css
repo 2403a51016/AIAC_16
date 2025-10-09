@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    font-family: 'Open Sans', Arial, sans-serif;
+    background: #f4f6fb;
+    color: #22223b;
+}
+
+.registration {
+    max-width: 420px;
+    margin: 3rem auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(46,58,89,0.10);
+    padding: 2.5rem 2rem;
+}
+
+.registration__title {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #2e3a59;
+    margin-bottom: 2rem;
+}
+
+.registration__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+
+.registration__field {
+    display: flex;
+    flex-direction: column;
+}
+
+.registration__label {
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #2e3a59;
+}
+
+.registration__input {
+    padding: 0.7rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+
+.registration__input:focus {
+    border-color: #f9a826;
+    outline: none;
+}
+
+.registration__error {
+    color: #d90429;
+    font-size: 0.95rem;
+    margin-top: 0.2rem;
+    min-height: 1.2em;
+}
+
+.registration__submit {
+    background: #2e3a59;
+    color: #fff;
+    border: none;
+    padding: 0.9rem 0;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.registration__submit:hover {
+    background: #f9a826;
+    color: #22223b;
+    transform: translateY(-2px) scale(1.03);
+}
+
+.registration__success {
+    margin-top: 1.5rem;
+    background: #d1fae5;
+    color: #065f46;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+    border: 1.5px solid #10b981;
+}
+
+@media (max-width: 600px) {
+    .registration {
+        padding: 1.2rem 0.5rem;
+    }
+}

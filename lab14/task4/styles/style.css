@@ -1,0 +1,38 @@
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    background: #f4f6fb;
+    color: #22223b;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    max-width: 600px;
+    margin: 3rem auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(46,58,89,0.10);
+    padding: 2rem;
+}
+
+.skeleton {
+    color: #aaa;
+    font-style: italic;
+    padding: 1rem 0;
+}
+
+.error {
+    color: #d90429;
+    font-weight: bold;
+    padding: 1rem 0;
+}
+
+.user-list {
+    list-style: none;
+    padding: 0;
+}
+
+.user-list__item {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #eee;
+}
