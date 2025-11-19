@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Live Digital Clock</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: "Orbitron", monospace;
+            overflow: hidden;
+        }
+
+        .clock-container {
+            text-align:
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            background: linear-gradient(120deg,#0f172a 0%, #081129 40%, #0b0f1a 100%);
+            overflow:hidden;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:32px;
+        }
+
+        /* animated subtle gradient */
+        body::before{
+            content:"";
+            position:fixed;
+            inset:-50%;
+            background: linear-gradient(60deg, rgba(126,249,255,0.06), rgba(155,126,255,0.06), rgba(255,255,255,0.02));
+            filter: blur(60px);
+            animation: floatBG 12s linear infinite;
+            z-index:0;
+        }
+        @keyframes floatBG{
+            0%{transform:translateY(-10%) rotate(0deg)}
+            50%{transform:translateY(10%) rotate(180deg)}
+            100%{transform:translateY(-10%) rotate(360deg)}
+        }
+
+        .clock-container{
+            position:relative;
+            z-index:1;
+            width:min(640px, 92vw);
+            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius:18px;
+            padding:34px 36px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:12px;
+            backdrop-filter: blur(10px) saturate(120%);
+            -webkit-backdrop-filter: blur(10px) saturate(120%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(2,6,23,0.6), 0 2px 6px rgba(0,0,0,0.5), 0 0 30px rgba(126,249,255,0.03) inset;
+        }
+
+        /* header label */
+        .label{
+            font-size:13px;
+            letter-spacing:2px;
+            color:var(--muted);
+            font-weight:600;
+            text-transform:uppercase;
+            margin-bottom:4px;
+        }
+
+        /* main clock */
+        #clock{
+            display:flex;
+            align-items:center;
+            gap:14px;
+            font-family:"Orbitron", monospace;
+            font-weight:700;
+            color: #e8f9ff;
+            text-shadow:
+                0 2px 10px rgba(0,0,0,0.6),
+                0 0 18px rgba(126,249,255,0.06),
+                0 0 36px rgba(155,126,255,0.02);
+            font-size:72px;
+            letter-spacing:4px;
+            padding:6px 10px;
+            transition:transform .24s ease;
+        }
+
+        /* digits groups */
+        .time-block{
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .digits{
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .digit{
+            display:inline-block;
+            min-width:38px;
+            text-align:center;
+            padding:6px 8px;
+            border-radius:8px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+            box-shadow: 0 6px 18px rgba(2,6,23,0.45), 0 0 10px rgba(126,249,255,0.02) inset;
+            font-variant-numeric: tabular-nums;
+            color:#e6fbff;
+        }
+
+        .colon{
+            font-size:72px;
+            line-height:1;
+            color:var(--accent);
+            animation: blink 1s steps(1,end) infinite;
+            opacity:1;
+            transform-origin:center;
+        }
+        @keyframes blink{
+            0%,49%{opacity:1}
+            50%,100%{opacity:0.15}
+        }
+
+        /* AM/PM pill */
+        .ampm{
+            font-size:16px;
+            color:#e8f9ff;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border:1px solid rgba(255,255,255,0.06);
+            padding:6px 10px;
+            border-radius:14px;
+            box-shadow:0 6px 16px rgba(2,6,23,0.4);
+            height:36px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            letter-spacing:1.5px;
+        }
+
+        /* date text */
+        .date {
+            font-size:15px;
+            color: rgba(255,255,255,0.85);
+            font-weight:600;
+            margin-top:6px;
+            letter-spacing:0.6px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+            padding:8px 12px;
+            border-radius:10px;
+            border:1px solid rgba(255,255,255,0.03);
+            box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+        }
+
+        /* small meta */
+        .meta{
+            display:flex;
+            gap:12px;
+            margin-top:8px;
+            align-items:center;
+            color:var(--muted);
+            font-size:13px;
+        }
+
+        /* responsive */
+        @media (max-width:420px){
+            #clock{font-size:42px}
+            .digit{min-width:28px;padding:4px 6px}
+            .colon{font-size:42px}
+            .ampm{font-size:12px;height:28px;padding:4px 8px}
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container" role="region" aria-label="Live digital clock">
+        <div class="label">LIVE DIGITAL CLOCK</div>
+
+        <div id="clock" aria-live="polite">
+            <!-- Filled by JS -->
+        </div>
+
+        <div class="date" id="date">Loading date...</div>
+        <div class="meta" aria-hidden="true">
+            <div>Local time • <span id="tz"></span></div>
+        </div>
+    </div>
+
+    <script>
+        function two(n){ return String(n).padStart(2,'0'); }
+
+        function updateClock(){
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            // 12-hour format
+            hours = hours % 12;
+            hours = hours ? hours : 12; // 0 -> 12
+
+            // Build HTML so colons can blink via CSS class
+            const h = two(hours);
+            const m = two(minutes);
+            const s = two(seconds);
+
+            const html = `
+                <div class="time-block">
+                    <div class="digits" aria-hidden="true">
+                        <div class="digit">${h}</div>
+                        <div class="colon">:</div>
+                        <div class="digit">${m}</div>
+                        <div class="colon">:</div>
+                        <div class="digit">${s}</div>
+                    </div>
+                    <div class="ampm" aria-label="${ampm}">${ampm}</div>
+                </div>
+            `;
+            document.getElementById('clock').innerHTML = html;
+
+            // Date display like "Tuesday • Nov 19, 2025"
+            const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+            const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+            const dateText = `${dayNames[now.getDay()]} • ${monthNames[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+            document.getElementById('date').textContent = dateText;
+
+            // timezone short name if available
+            let tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+            document.getElementById('tz').textContent = tz.replace('_',' ');
+        }
+
+        // initial + interval
+        updateClock();
+        // sync to next second to avoid drift
+        const now = Date.now();
+        const delay = 1000 - (now % 1000);
+        setTimeout(function(){
+            updateClock();
+            setInterval(updateClock, 1000);
+        }, delay);
+    </script>
+</body>
+</html>
